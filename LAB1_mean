@@ -1,0 +1,25 @@
+import numpy as np #array or matrices
+import pandas as pd #data analysis, sorting, interaction, re indexing
+import matplotlib.pyplot as plt  #plotting graph
+from scipy.stats import norm #length of vector #probablistic distributions
+mean = 0 
+std_dev = 1
+expectations = [] 
+for N in range(100, 10 ** 5, 1000):
+      random_no = np.random.normal(loc = mean, scale = std_dev, size = (N,))
+      expectation = np.sum(np.logical_and(random_no <= 1, random_no >= -1)) / N
+      expectations.append(expectation)
+
+_, bins, _ = plt.hist(random_no, 100, density = True)
+plt.plot(bins, norm.pdf(bins, loc = mean, scale = std_dev), linewidth = 2, color='#DC143C')
+plt.show()
+E_X = 68.2
+MEAN_E_X = np.mean(expectations) * 100
+MEAN_E_X = int(MEAN_E_X * 10) / 10
+
+if E_X == MEAN_E_X:
+ print('Result Verified.')
+ print(f'mean(XN) = E(X) = {E_X}%')
+else:
+ print('Your results are wrong. Check again!')
+ print(f'mean(XN) != E(X) = {E_X}%')
